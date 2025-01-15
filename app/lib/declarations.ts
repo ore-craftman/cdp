@@ -10,3 +10,38 @@ export interface SelectProps extends React.ComponentPropsWithoutRef<"select"> {
   label: string;
   children?: React.ReactNode;
 }
+
+export interface IUser {
+  id: string;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+export interface UserPayload {
+  type: "SPIME" | "CO" | "MDA" | "PDO";
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: string;
+  nin: string;
+  communityRole?: string;
+  assignedCommunity?: string;
+  assignedMda?: string;
+  pdoRole?: string;
+}
+
+// User schema
+export interface User extends UserPayload {
+  createdAt: Date;
+  updatedAt: Date;
+  verifiedEmail: boolean;
+  password: string;
+}
+
+export interface SignupEmail {
+  firstName: string;
+  role: string;
+  password: string;
+  email: string;
+}
