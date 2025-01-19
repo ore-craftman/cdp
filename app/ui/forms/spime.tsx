@@ -1,9 +1,56 @@
+import { FormEvent } from "react";
 import Button from "../button";
 import Input from "../input";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { httpHandler } from "../../lib/http";
+import { endpoints } from "../../lib/constants";
+import { UserPayload } from "../../lib/declarations";
+import { Spinner } from "../loader";
+import { useRouter } from "next/navigation";
 
 export default function Spime() {
+  const router = useRouter();
+  const { mutate, isPending, isError, isSuccess, data, error } = useMutation({
+    mutationFn: (data: UserPayload) =>
+      httpHandler({ data, url: endpoints.CREATE_USER, method: "post" }),
+  });
+
+  async function submitHandler(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    const payload = {
+      type: "SPIME",
+      email: data["email-address"].toString(),
+      firstName: data["first-name"].toString(),
+      lastName: data["last-name"].toString(),
+      phoneNumber: data["phone-number"].toString(),
+      nin: data["national-identification-number-(nin)"].toString(),
+      role: "SPIME",
+    };
+
+    mutate(payload);
+  }
+
+  if (isSuccess) {
+    toast.success("Users created successfully");
+    router.push("/user-management");
+  }
+
+  if (isError) {
+    /* eslint-disable @typescript-eslint/ban-ts-comment */
+    // @ts-ignore
+    const { response } = error;
+    toast.error(response?.data?.message ?? "Error creating user");
+
+    console.log({ error, data });
+  }
+
   return (
-    <form className="mt-6 flex flex-col gap-1.5">
+    <form className="mt-6 flex flex-col gap-1.5" onSubmit={submitHandler}>
       <Input
         type="email"
         placeholder="Enter user email address"
@@ -49,7 +96,10 @@ export default function Spime() {
         </div>
       </div>
 
-      <Button role="submit">Create User</Button>
+      <Button role="submit" disabled={isPending}>
+        {isPending && <Spinner />}
+        {isPending ? "Loading..." : "Create User"}
+      </Button>
     </form>
   );
 }

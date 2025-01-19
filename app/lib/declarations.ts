@@ -18,13 +18,13 @@ export interface IUser {
 }
 
 export interface UserPayload {
-  type: "SPIME" | "CO" | "MDA" | "PDO";
+  type: "SPIME" | "CO" | "MDA" | "PDO" | string;
   email: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  role: string;
   nin: string;
+  role: string;
   communityRole?: string;
   assignedCommunity?: string;
   assignedMda?: string;
@@ -44,4 +44,12 @@ export interface SignupEmail {
   role: string;
   password: string;
   email: string;
+}
+
+export interface IPagination {
+  totalCount: number;
+  pageCount: number;
+  currentPage: number;
+  lastVisible: string;
+  firstVisible: string;
 }

@@ -9,8 +9,8 @@ export default function Header() {
       </Link>
 
       <div>
-        <h4 className="text-primary  font-semibold">Oreoluwa</h4>
-        <p className="text-gray-500 text-xs ml-1">Keymaster</p>
+        <h4 className="text-primary  font-semibold">Admin</h4>
+        <p className="text-gray-500 text-xs">Keymaster</p>
       </div>
     </header>
   );

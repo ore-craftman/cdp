@@ -1,5 +1,6 @@
 import "@/app/ui/global.css";
 import type { Metadata } from "next";
+import QueryProvider from "./lib/query-provider";
 
 export const metadata: Metadata = {
   title: "Community Development Programme | Kastina",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased`}>{children}</body>
+      <body className={` antialiased`}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }

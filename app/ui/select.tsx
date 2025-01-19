@@ -1,7 +1,7 @@
 import { SelectProps } from "../lib/declarations";
 
 export default function Select({ label, children, ...props }: SelectProps) {
-  const id = label.split(" ").join("-");
+  const id = label.split(" ").join("-").toLowerCase();
   return (
     <div className="flex flex-col gap-1.5 my-2">
       <div>
@@ -12,6 +12,7 @@ export default function Select({ label, children, ...props }: SelectProps) {
         id={id}
         className="border border-gray-600 rounded-md py-2.5 px-4 bg-transparent w-full"
         {...props}
+        name={id}
       >
         {children}
       </select>
